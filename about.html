@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About - Smart City Tourism</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* Same CSS as index.html for navbar and content */
+:root{--text-light:#ffffff;--accent-blue:#4c2fff;--accent-purple:#7a5bff;--accent-orange:#ff7a1a;--accent-orange2:#ff9933;}
+body{margin:0;font-family:'Poppins',sans-serif;background-color:#e0e0e0;color:#1a1a1a;line-height:1.7;}
+.navbar{position:fixed;top:0;left:0;width:100%;background:#12122a;display:flex;align-items:center;justify-content:space-between;padding:18px 60px;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,0.6);}
+.navbar h2{margin:0;font-size:1.8rem;font-weight:700;background: linear-gradient(90deg, var(--accent-orange), var(--accent-purple), var(--accent-blue));-webkit-background-clip: text;-webkit-text-fill-color: transparent;}
+.navbar .nav-links{display:flex;gap:24px;}
+.navbar .nav-links a{color:var(--text-light);text-decoration:none;font-weight:600;padding:12px 18px;border-radius:8px;position:relative;transition:0.3s;}
+.navbar .nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0%;height:3px;border-radius:2px;background: linear-gradient(90deg, var(--accent-orange), var(--accent-purple), var(--accent-blue));transition:0.3s;}
+.navbar .nav-links a:hover::after{width:100%;}
+.navbar .nav-links a.active{ color:var(--accent-orange); font-weight:700; border-bottom:3px solid var(--accent-orange2); }
+@media(max-width:860px){.navbar{flex-direction:column;align-items:flex-start;padding:16px 20px;}.navbar .nav-links{flex-direction:column;gap:12px;width:100%;}.navbar .nav-links a{width:100%;text-align:center;}}
+.content{padding-top:120px;}
+.page{width:80%;margin:auto;padding:40px 50px;background:#fff;border-radius:12px;margin-bottom:40px;box-sizing:border-box;}
+@media(max-width:900px){ .page{width:90%; padding:20px;} }
+h1{font-size:2.6rem;text-align:center;color:#ff8800;margin:25px 0;}
+p{font-size:20px;text-align:justify;margin-bottom:20px;}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <h2>Smart City Tourism</h2>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="about.html" class="active">About</a>
+    <a href="mycontribution.html">My Contribution</a>
+    <a href="vijayalakshmi.html">Vijayalakshmi</a>
+  </div>
+</div>
+
+<div class="content">
+  <div class="page">
+    <h1>About This Project</h1>
+    <p>This project demonstrates a Smart City Tourism system. It includes tourism insights, accommodation management, attraction analysis, navigation algorithms, and data visualization. The platform is designed to optimize tourist experience while promoting sustainable development, digital infrastructure, and economic growth.</p>
+  </div>
+</div>
+
+</body>
+</html>
