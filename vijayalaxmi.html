@@ -1,1 +1,1821 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vijayalaxmi - Smart City Tourism & Accommodation</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+/* -------------------- VARIABLES -------------------- */
+:root{
+  --text-light: #ffffff;
+  --accent-blue: #4c2fff;
+  --accent-purple: #7a5bff;
+  --accent-orange: #ff7a1a;
+  --accent-orange2: #ff9933;
+}
+
+/* -------------------- BASE -------------------- */
+body{
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #e0e0e0;
+  color: #1a1a1a;
+  line-height: 1.7;
+}
+
+/* -------------------- NAVBAR -------------------- */
+.navbar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #12122a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 60px;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+}
+
+.navbar h2{
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--accent-orange), var(--accent-purple), var(--accent-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.navbar .nav-links{
+  display: flex;
+  gap: 24px;
+}
+
+.navbar .nav-links a{
+  color: var(--text-light);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 12px 18px;
+  border-radius: 8px;
+  position: relative;
+  transition: 0.3s;
+}
+
+/* Gradient underline animation */
+.navbar .nav-links a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:0%;
+  height:3px;
+  border-radius:2px;
+  background: linear-gradient(90deg, var(--accent-orange), var(--accent-purple), var(--accent-blue));
+  transition:0.3s;
+}
+.navbar .nav-links a:hover::after{
+  width:100%;
+}
+.navbar .nav-links a.active{
+  color: var(--accent-orange);
+  font-weight:700;
+  border-bottom:3px solid var(--accent-orange2);
+}
+
+/* -------------------- RESPONSIVE NAVBAR -------------------- */
+@media(max-width:860px){
+  .navbar{
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 20px;
+  }
+  .navbar .nav-links{
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+  .navbar .nav-links a{
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* -------------------- CONTENT -------------------- */
+.content{
+  padding-top: 120px; /* prevent navbar overlap */
+}
+
+/* Headings and paragraphs */
+h1, .main-heading { font-size: 2.6rem; text-align:center; color:#ff8800; margin:25px 0; }
+h2 { font-size:1.8rem; text-align:center; color:#3f6f3f; margin:20px 0 15px 0; }
+h3 { font-size:1.6rem; color:#3f6f3f; margin-top:20px; margin-bottom:10px; }
+p { font-size:20px; text-align:justify; margin-bottom:20px; }
+ul { font-size:18px; margin-left:25px; margin-bottom:20px; }
+
+/* White page container */
+.page { width:80%; margin:auto; padding:40px 50px; background:#fff; border-radius:12px; margin-bottom:40px; box-sizing:border-box; }
+
+/* Highlights */
+.highlights { display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px; margin-bottom:40px; }
+.highlight-box { flex:1 1 calc(25% - 20px); background:#fff4cc; color:#1a1a1a; padding:20px; border-radius:12px; text-align:center; box-shadow:0 4px 15px rgba(0,0,0,0.2); min-width:200px; transition:transform 0.3s, box-shadow 0.3s; }
+.highlight-box:hover { transform:translateY(-5px); box-shadow:0 8px 25px rgba(0,0,0,0.3); }
+.highlight-box h3 { margin-top:10px; font-size:1.2rem; }
+.highlight-box p { font-size:16px; margin-top:8px; }
+
+/* Problems Section */
+.problems-section { display:flex; justify-content:space-between; align-items:flex-start; gap:30px; margin-bottom:40px; flex-wrap:wrap; }
+.problems-list { flex:1 1 45%; }
+.crowd-image { flex:1 1 45%; text-align:center; }
+.crowd-image img { width:100%; max-width:400px; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.3); margin-bottom:10px; }
+.crowd-image a { display:block; margin-bottom:8px; color:#00aaff; text-decoration:underline; }
+
+/* Sub-Sectors */
+.sub-sectors { display:flex; gap:20px; flex-wrap:wrap; overflow-x:auto; padding:10px; justify-content:center; margin-bottom:40px; }
+.sub-sectors div { background:#000; color:#fff; border-radius:50%; width:120px; height:120px; display:flex; align-items:center; justify-content:center; text-align:center; padding:10px; font-weight:bold; cursor:pointer; transition:transform 0.3s, box-shadow 0.3s; }
+.sub-sectors div:hover { transform:scale(1.1); box-shadow:0 8px 20px rgba(0,0,0,0.3); }
+
+/* Use Case Boxes */
+.usecase-box { background:#fff; padding:22px; border-left:6px solid #3f6f3f; border-radius:10px; margin:15px auto; max-width:800px; }
+.usecase-step { margin-bottom:10px; font-size:16px; }
+
+/* Algorithm Box */
+.algorithm-box { background:#fff8b3; border:2px solid #000; padding:20px; border-radius:10px; display:inline-block; font-weight:bold; white-space:pre-wrap; margin-bottom:30px; }
+
+/* Grey heading */
+.grey-heading { background:#e0e0e0; padding:20px 40px; border-radius:12px; width:fit-content; text-align:center; color:#ff8800; font-size:2.6rem; margin:40px auto; }
+/* Accommodation images */
+img {
+    width: 100%;          /* Makes image responsive */
+    max-width: 400px;     /* Limits maximum width */
+    height: auto;         /* Maintains aspect ratio */
+    border-radius: 12px;  /* Rounded corners */
+    display: block;
+    margin: 20px auto;    /* Centers the image with vertical spacing */
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15); /* Subtle shadow */
+}
+
+.img-caption {
+    text-align: center;
+    font-style: italic;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+/* Accommodation Graph Styles */
+canvas { margin-top:20px; border-radius:12px; background: #fdfdfd; padding:15px; box-shadow:0 3px 10px rgba(0,0,0,0.08); }
+
+/* -------------------- RESPONSIVE -------------------- */
+@media(max-width:900px){
+  .highlights { flex-direction:column; align-items:center; }
+  .highlight-box { width:80%; }
+  .problems-section { flex-direction:column; }
+  .problems-list, .crowd-image { flex:1 1 100%; }
+  .sub-sectors { flex-direction:column; align-items:center; }
+  .navbar { flex-direction:column; align-items:flex-start; padding:16px 20px; }
+  .navbar a { margin-left:0; margin-top:8px; }
+  .page { width:90%; padding:20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+    <h2>Vijayalakshmi – Smart City</h2>
+    <div class="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">About</a>
+        <a href="project.html">Project</a>
+        <a href="vaishnavi.html">Vaishnavi</a>
+        <a href="vijayalakshmi.html">Vijayalakshmi</a>
+        <a href="sunil.html">Sunil</a>
+        <a href="sushant.html">Sushant</a>
+        <a href="collabz.html">Collabz</a>
+    </div>
+</div>
+
+<div class="content">
+    <!-- -------------------- TOURISM PAGE -------------------- -->
+    <h1 class="main-heading">Tourism</h1>
+    <div class="page">
+        <h2>Why I Chose the Tourism Sector</h2>
+
+
+<!-- FULL WIDTH IMAGE – SIZE INCREASED + CLEAR -->
+<div style="
+    width:110vw;                         /* 👈 actual size increase */
+    margin-left:calc(-55vw + 50%);
+    margin-right:calc(-55vw + 50%);
+    margin-top:40px;
+    margin-bottom:40px;
+    text-align:center;
+">
+    <img src="sustainable_tourism.png" alt="Sustainable Tourism"
+         style="
+            width:100%;
+            height:auto;
+            display:block;
+            object-fit:contain;
+            border-radius:16px;
+            box-shadow:0 12px 32px rgba(0,0,0,0.22);
+            filter:contrast(1.25) brightness(1.1) saturate(1.2);
+         ">
+</div>
+
+
+        <p>Tourism drives economic growth, creates jobs, and promotes culture. In smart cities, technology enhances tourist experiences by optimizing routes and managing attractions efficiently.</p>
+
+        <h2>Discover Vritdhara</h2>
+        <p style="text-align:center; font-style:italic; margin-bottom:30px;">Culture • Cinema • Heritage • Nature</p>
+
+        <div class="highlights">
+            <div class="highlight-box">🛕<h3>Cultural Emblem</h3><p>Located at the center of the lake, representing the cultural identity and heritage of Vritdhara.</p></div>
+            <div class="highlight-box">🎬<h3>Eterna Studio (Rajapuri)</h3><p>A large film city offering studio tours, film shoots, and cinematic experiences.</p></div>
+            <div class="highlight-box">🏰<h3>Vrithdhara Palace</h3><p>Showcases royal architecture and stands as a symbol of heritage and historical pride.</p></div>
+            <div class="highlight-box">🌿<h3>National Park</h3><p>Promotes eco-tourism, wildlife conservation, and a peaceful natural experience.</p></div>
+        </div>
+
+        <h2>Current Problems in the Tourism Sector</h2>
+        <div class="problems-section">
+            <div class="problems-list">
+                <ul>
+                    <li>Overcrowding</li>
+                    <li>Long queues</li>
+                    <li>Safety concerns</li>
+                    <li>Lack of digital systems</li>
+                    <li>Waste management issues</li>
+                    <li>Poor navigation & confusing signs</li>
+                    <li>Disconnected local businesses</li>
+                </ul>
+            </div>
+            <div class="crowd-image">
+                <img src="crowd.png" alt="Crowd Image">
+                <a href="#">▶ Overtourism & overcrowding explained – YouTube</a>
+                <a href="#">▶ Waste, congestion & environmental issues – YouTube</a>
+                <a href="#">▶ Tourist management failures & long queues – YouTube</a>
+            </div>
+        </div>
+
+        <h2>Why Innovation is Needed</h2>
+        <p>Innovation is needed in the tourism sector to make travel smoother, faster, and safer. Traditional systems cannot handle overcrowding, long waits, or lack of real-time information. Modern tourists expect digital services, smart navigation, and personalized guidance. Smart solutions help reduce chaos, manage crowds, improve safety, and boost local businesses.</p>
+
+        <h2>Tourism Sector Sub-Divisions</h2>
+        <div class="sub-sectors">
+            <div>Tourist Info & Navigation</div>
+            <div>Accommodation</div>
+            <div>Attractions</div>
+            <div>Safety & Security</div>
+            <div>Cleanliness & Sustainability</div>
+            <div>Local Culture & Shopping</div>
+        </div>
+    </div>
+
+    <h1 class="grey-heading">Tourism & Navigation System</h1>
+    <div class="page">
+        <p>The Tourism and Navigation System is designed to enhance the experience of travelers by providing comprehensive information about tourist destinations and facilitating seamless navigation...</p>
+
+        <h3>1. Introduction and Problem Statement</h3>
+        <p>Tourism plays a major role in economic development, but tourists often face difficulties navigating unfamiliar cities. Lack of local knowledge, traffic congestion, safety concerns, and inefficient routing can negatively impact the tourist experience. The Tourism and Navigation System aims to solve these problems by providing accurate, efficient, and reliable navigation assistance.</p>
+
+        <h3>2. Tourist Flow and Conceptual Pre-Idea</h3>
+        <ul>
+            <li>Destination planning before arrival</li>
+            <li>Live location detection using GPS</li>
+            <li>Navigation between tourist spots</li>
+            <li>Safety and emergency access</li>
+            <li>Experience feedback</li>
+        </ul>
+
+        <h3>3. System Architecture</h3>
+        <p>The system consists of a tourist interface, GPS module, digital city map database, and a navigation engine. The navigation engine processes routing requests and provides optimized routes in real time.</p>
+
+        <h3>4. Graph-Based Data Representation</h3>
+        <p>The city map is modeled as a weighted graph where intersections represent vertices, roads represent edges, and distance or travel time acts as weights. This structure enables efficient shortest-path computation.</p>
+
+        <h3>Role of Dijkstra’s Algorithm</h3>
+        <p>Dijkstra’s algorithm calculates the shortest path from the tourist’s current location to the selected destination by considering distances or travel time as weights.</p>
+
+        <h3>5. Dijkstra Algorithm Implementation</h3>
+        <div class="algorithm-box">
+ALGORITHM Dijkstra(G, s)
+for each vertex v in V
+    dist[v] ← ∞
+    parent[v] ← null
+dist[s] ← 0
+while unvisited vertices exist
+    u ← vertex with minimum dist
+    mark u as visited
+    for each neighbor v of u
+        if dist[u] + w(u,v) < dist[v]
+            dist[v] ← dist[u] + w(u,v)
+            parent[v] ← u
+        </div>
+
+        <h3>6. Real-Time Working of the Algorithm</h3>
+        <p>As the tourist moves, the system continuously updates location data. If deviations or changes occur, the algorithm is re-executed to ensure optimal navigation.</p>
+
+        <h3>7. SDG Alignment</h3>
+        <ul>
+            <li><strong>SDG 9:</strong> Innovation and Infrastructure</li>
+            <li><strong>SDG 11:</strong> Sustainable Cities</li>
+        </ul>
+
+        <h3>8. Use Case Scenario (Tourist Navigation)</h3>
+        <div class="usecase-box">
+            <div class="usecase-step">📍 <strong>Step 1:</strong> Tourist arrives at Vritdhara Railway Station</div>
+            <div class="usecase-step">📱 <strong>Step 2:</strong> Selects a destination: Vrithdhara Palace</div>
+            <div class="usecase-step">🗺️ <strong>Step 3:</strong> City graph is accessed for navigation</div>
+            <div class="usecase-step">🧮 <strong>Step 4:</strong> Dijkstra computes shortest route</div>
+            <div class="usecase-step">🚶 <strong>Step 5:</strong> Real-time navigation guides the tourist</div>
+        </div>
+
+        <h3>9. Tourist Interaction Flow Diagram</h3>
+        <div style="margin-top:20px; text-align:center;">
+            <img src="tourist and navigation.png" alt="Tourist Navigation Interaction Flow" style="width:100%; max-width:900px; border-radius:12px;">
+            <p style="font-style:italic; margin-top:8px;">Figure: Tourist Navigation System – User Interaction Flow</p>
+        </div>
+
+        <h3>10. Advantages and Limitations</h3>
+        <ul>
+            <li>Optimal route selection</li>
+            <li>Reduced travel time</li>
+            <li>Improved tourist safety</li>
+            <li>Transparent algorithm logic</li>
+            <li>Requires GPS and internet</li>
+            <li>Less efficient for extremely large maps</li>
+        </ul>
+
+        <h3>11. Future Enhancement</h3>
+        <p>Future improvements may include traffic prediction, AI-assisted personalization, integration with accommodation services, and emergency response optimization.</p>
+    </div>
+<!-- -------------------- ACCOMMODATION PAGE -------------------- -->
+
+<h1 class="grey-heading"> Accommodation </h1>
+<div class="page">
+
+    <p>Accommodation and navigation are closely connected in tourism. Tourists need comfortable lodging and efficient routes to reach attractions, restaurants, and cultural sites. By integrating accommodation data with navigation, tourists can select lodging near points of interest, plan itineraries efficiently, and enjoy a seamless travel experience, while also contributing to the local economy.</p>
+
+    <h3>1.Importance of Accommodationt</h3>
+    <p>Accommodation is crucial for ensuring comfort, safety, and convenience for tourists. Quality lodging encourages longer stays and repeat visits, and directly impacts the perception of the city as a tourist-friendly destination. Diverse options, from budget hostels to luxury hotels, ensure that tourists of all types can find suitable lodging.</p>
+
+    <h3>2.Stakeholder Responsibilities</h3>
+    <ul>
+        <li>🧳 <strong>Tourists:</strong> Select suitable accommodation, provide honest reviews, follow guidelines.</li>
+        <li>🏨 <strong>Hotels/Hostels/Resorts:</strong> Maintain accurate listings, hygiene, quality, amenities, and respond to feedback.</li>
+        <li>🍽️ <strong>Restaurants:</strong> Maintain food quality & hygiene, provide accurate location and timing, respond to reviews, collaborate with nearby accommodations.</li>
+        <li>🏙️ <strong>City:</strong> Use collected data for planning, tourism promotion, and sustainable economic growth.</li>
+    </ul>
+
+    <h3>3.Proposed Solution</h3>
+    <p>Tourist accommodation is a critical component of the travel experience, providing safety, comfort, and convenience that directly influence satisfaction and duration of stay. By accessing a centralized system, tourists can explore a wide range of lodging options, filter them based on preferences such as price, rating, amenities, and proximity to attractions, and make informed booking decisions. Hotels and restaurants provide accurate information, maintain quality, offer essential amenities, and respond promptly to feedback. Their performance directly impacts tourist satisfaction and city reputation. Effective integration increases occupancy, boosts tourist spending, and generates employment. Data visualized via graphs—showing occupancy trends, price distributions, ratings, and tourist behavior—helps city planners and service providers optimize infrastructure and promotions. The accommodation system strengthens tourist experience, operational efficiency of hotels/restaurants, and contributes to sustainable economic growth.</p>
+
+
+  <!-- Image After Proposed Solution -->
+<div style="text-align:center; margin:30px 0;">
+    <img src="image.png" 
+         alt="Accommodation Example" 
+         style="width:100%; max-width:700px; max-height:400px; object-fit:cover; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.15);">
+</div>
+
+
+
+<!-- Images Section --> <img src="https://images.unsplash.com/photo-1560347876-aeef00ee58a1" alt="Hotel Lobby" style="width:100%; max-width:400px; max-height:250px; object-fit:cover; display:block; margin:auto;"> <p style="font-size:20px; color:#333; text-align:center; margin-bottom:25px;"> <strong>Hotel Lobby:</strong> Modern, organized lobby representing high-quality accommodation facilities. Ensures comfort, convenience, and a positive first impression. Proper layout, cleanliness, and amenities enhance guest satisfaction and encourage repeat visits. </p> <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" alt="Homestay" style="width:100%; max-width:600px; display:block; margin:auto;"> <p style="font-size:20px; color:#333; text-align:center; margin-bottom:25px;"> <strong>Homestay Experience:</strong> Personalized and cultural lodging offering tourists an authentic experience. Supports local communities, promotes cultural exchange, and allows visitors to enjoy comfort while connecting with local traditions. </p>
+
+
+
+    <h2>4.Algorithms Supporting the System</h2>
+    <h3>i)Filtering Algorithm 🧰</h3>
+    <div class="algorithm-box">
+ALGORITHM RealisticFilterServices(services, filters)
+    Initialize filteredList as empty
+    
+    FOR each service in services
+        matchScore ← 0
+        
+        // Mandatory filters (must satisfy)
+        IF service.price NOT IN filters.priceRange OR
+           service.availability = false
+            CONTINUE to next service
+        
+        // Optional filters (increase score if matched)
+        IF service.rating >= filters.minRating
+            matchScore += 2
+        IF service.amenities CONTAINS filters.requiredAmenities
+            matchScore += 1 for each matched amenity
+        IF service.distance <= filters.maxDistance
+            matchScore += 1
+        
+        // Add to filtered list with score
+        Add (service, matchScore) to filteredList
+
+    // Sort by matchScore descending
+    Sort filteredList by matchScore DESC
+    RETURN filteredList
+    </div>
+    <p>This algorithm filters accommodations/restaurants by user preferences like price, rating, amenities, and location. It ensures tourists see only relevant options efficiently.</p>
+
+    <h3>ii)Sorting Algorithm 📊</h3>
+    <div class="algorithm-box">
+ALGORITHM RealisticSortServices(services, sortCriteria)
+    // sortCriteria is a list, e.g., ["price", "rating", "distance"]
+
+    FUNCTION Compare(serviceA, serviceB):
+        FOR each criterion in sortCriteria:
+            IF criterion = "price":
+                IF serviceA.price != serviceB.price
+                    RETURN serviceA.price - serviceB.price
+            ELSE IF criterion = "rating":
+                IF serviceA.rating != serviceB.rating
+                    RETURN serviceB.rating - serviceA.rating  // higher rating first
+            ELSE IF criterion = "distance":
+                IF serviceA.distance != serviceB.distance
+                    RETURN serviceA.distance - serviceB.distance  // closer first
+            ELSE IF criterion = "popularity":
+                IF serviceA.bookings != serviceB.bookings
+                    RETURN serviceB.bookings - serviceA.bookings  // more bookings first
+        RETURN 0  // if all criteria equal
+
+    Sort services using Compare function
+    RETURN sorted services
+
+    </div>
+    <p>This algorithm sorts filtered accommodation results based on criteria such as price, rating, or distance, helping tourists identify the most suitable options.</p>
+
+    <h3>iii)Recommendation Algorithm 🤖</h3>
+    <div class="algorithm-box">
+ALGORITHM RealisticRecommendServices(user, services)
+    recommendedList ← empty list
+
+    FOR each service in services:
+        score ← 0
+
+        // Step 1: Match user preferences
+        IF service.type in user.preferredTypes:
+            score += 30
+        IF service.price in user.budgetRange:
+            score += 20
+        IF service.amenities include all user.requiredAmenities:
+            score += 20
+
+        // Step 2: Consider past behavior
+        IF user has previously booked similar service:
+            score += 10
+
+        // Step 3: Ratings & reviews
+        score += service.rating * 5  // higher rated services get more points
+
+        // Step 4: Proximity to points of interest
+        IF service.distanceToAttractions <= user.maxDistance:
+            score += 10
+
+        // Step 5: Popularity among similar users
+        score += service.similarUserBookings * 2
+
+        // Add to list with calculated score
+        recommendedList.append({service, score})
+
+    // Step 6: Sort by score descending
+    recommendedList.sort(by score descending)
+
+    // Step 7: Return top N recommendations
+    RETURN top N services from recommendedList
+
+    </div>
+    <p>Provides personalized recommendations based on tourist preferences, past bookings, and similar user behavior, increasing satisfaction and engagement.</p>
+
+    <h3>iv)Analytics Algorithm 📈</h3>
+    <div class="algorithm-box">
+ALGORITHM RealisticGenerateAnalytics(bookingData)
+    analyticsDashboard ← empty object
+
+    // Step 1: Occupancy Trend
+    occupancyPerMonth ← array of size 12 initialized to 0
+    FOR each booking in bookingData:
+        month ← booking.date.month
+        occupancyPerMonth[month] += 1
+    analyticsDashboard.occupancyTrend ← occupancyPerMonth
+
+    // Step 2: Average Ratings
+    ratingsSum ← 0
+    ratingsCount ← 0
+    FOR each review in bookingData.reviews:
+        ratingsSum += review.rating
+        ratingsCount += 1
+    analyticsDashboard.avgRating ← ratingsSum / ratingsCount
+
+    // Step 3: Revenue Per Service
+    revenueMap ← empty dictionary
+    FOR each booking in bookingData:
+        service ← booking.accommodationID
+        revenueMap[service] += booking.pricePaid
+    analyticsDashboard.revenuePerService ← revenueMap
+
+    // Step 4: Tourist Behavior Analysis
+    behaviorStats ← {}
+    behaviorStats.topPreferredAmenities ← computeMostUsedAmenities(bookingData)
+    behaviorStats.popularAccommodationTypes ← computeMostBookedTypes(bookingData)
+    behaviorStats.avgStayDuration ← computeAverageStay(bookingData)
+    analyticsDashboard.touristBehavior ← behaviorStats
+
+    // Step 5: Data Visualization
+    generateGraphs(analyticsDashboard)
+        // Example graphs:
+        // - Line graph for occupancyTrend
+        // - Bar chart for avgRating distribution
+        // - Pie chart for revenuePerService
+        // - Bar chart for popular accommodation types
+
+    RETURN analyticsDashboard
+
+    </div>
+    <p>Collects and visualizes data on occupancy trends, ratings, revenue, and tourist behavior to aid hotel managers and city planners in making informed strategic decisions.</p>
+     
+    <h3>5.Analytics & Insights</h3>
+
+
+  <!-- Slightly Bigger Occupancy Chart -->
+<div style="width:500px; height:300px; margin:auto;">
+    <canvas id="occupancyChart"></canvas>
+</div>
+<p style="font-size:26px; color:#333; text-align:center; margin-top:10px; margin-bottom:25px;">
+    <strong>Occupancy Trend:</strong> Line graph showing monthly hotel occupancy. Peaks indicate high tourist influx, helping hotels optimize staffing, pricing, and services. City planners can enhance transport and infrastructure during peak months. Efficient occupancy management directly supports economic growth and improves overall tourist satisfaction.
+</p>
+
+<!-- Rating Chart -->
+<div style="width:500px; height:300px; margin:auto;">
+    <canvas id="ratingChart"></canvas>
+</div>
+<p style="font-size:24px; color:#333; text-align:center; margin-top:10px; margin-bottom:25px;">
+    <strong>Hotel Ratings:</strong> Bar graph showing distribution of hotel ratings. Helps tourists select high-quality accommodations and assists hotels in improving services. Higher-rated hotels attract more visitors, encouraging repeat tourism and boosting local revenue.
+</p>
+
+<!-- Price Chart -->
+<div style="width:500px; height:300px; margin:auto;">
+    <canvas id="priceChart"></canvas>
+</div>
+<p style="font-size:22px; color:#333; text-align:center; margin-top:10px; margin-bottom:25px;">
+    <strong>Price Distribution:</strong> Graph showing hotel pricing ranges. Tourists can plan budgets and select preferred options. Hotels can adjust pricing to attract diverse tourists, promoting inclusive tourism and supporting city-wide economic growth.
+</p>
+
+
+    <script>
+        const occupancyCtx = document.getElementById('occupancyChart').getContext('2d');
+        const occupancyChart = new Chart(occupancyCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                datasets: [{label:'Occupancy %', data:[60,70,75,80,85,90,95,90,80,75,65,60], borderColor:'#3498db', fill:true, backgroundColor:'rgba(52,152,219,0.2)', tension:0.3}]
+            },
+            options: {
+                responsive:true,
+                maintainAspectRatio:false,
+                plugins: {
+                    title:{display:true,text:'Hotel Occupancy Trend', color:'#2c3e50', font:{size:14}},
+                    legend:{labels:{color:'#2c3e50', font:{size:12}}}
+                },
+                scales:{x:{ticks:{color:'#2c3e50'}}, y:{ticks:{color:'#2c3e50'}, beginAtZero:true}}
+            }
+        });
+
+        const ratingCtx = document.getElementById('ratingChart').getContext('2d');
+        const ratingChart = new Chart(ratingCtx, {
+            type: 'bar',
+            data: { labels:['⭐','⭐⭐','⭐⭐⭐','⭐⭐⭐⭐','⭐⭐⭐⭐⭐'], datasets:[{label:'Number of Hotels', data:[2,5,10,8,4], backgroundColor:'#e67e22'}] },
+            options: {
+                responsive:true,
+                maintainAspectRatio:false,
+                plugins: {
+                    title:{display:true,text:'Hotel Rating Distribution', color:'#2c3e50', font:{size:14}},
+                    legend:{labels:{color:'#2c3e50', font:{size:12}}}
+                },
+                scales:{x:{ticks:{color:'#2c3e50'}}, y:{ticks:{color:'#2c3e50'}, beginAtZero:true}}
+            }
+        });
+
+        const priceCtx = document.getElementById('priceChart').getContext('2d');
+        const priceChart = new Chart(priceCtx, {
+            type:'bar',
+            data:{ labels:['< $50','$50-100','$100-150','$150-200','> $200'], datasets:[{label:'Number of Hotels', data:[5,12,8,6,3], backgroundColor:'#2ecc71'}] },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false,
+                plugins:{
+                    title:{display:true,text:'Price Distribution of Hotels', color:'#2c3e50', font:{size:14}},
+                    legend:{labels:{color:'#2c3e50', font:{size:12}}}
+                },
+                scales:{x:{ticks:{color:'#2c3e50'}}, y:{ticks:{color:'#2c3e50'}, beginAtZero:true}}
+            }
+        });
+    </script>
+
+    <h3>6.Advantages & Limitations</h3>
+    <ul>
+        <li>✅ Centralized information for tourists and service providers</li>
+        <li>✅ Improves booking convenience and satisfaction</li>
+        <li>✅ Personalized recommendations and analytics for business growth</li>
+        <li>❌ Real-time updates require internet & data maintenance</li>
+        <li>❌ Large datasets may slow filtering/sorting if not optimized</li>
+    </ul>
+
+    <h3>7.Future Enhancements</h3>
+    <ul>
+        <li>AI-driven personalized recommendations and predictive pricing</li>
+        <li>Eco-friendly and sustainable accommodation filters</li>
+        <li>Dynamic availability updates & mobile notifications</li>
+        <li>Integrated city-level analytics dashboard for economic planning</li>
+    </ul>
+
+    <h3>8.SDG Alignment</h3>
+    <ul>
+        <li>🌱 SDG 8: Promote economic growth and employment through tourism and hospitality</li>
+        <li>🏙️ SDG 11: Sustainable cities & communities</li>
+        <li>🍽️ SDG 12: Responsible consumption & production in accommodations and restaurants</li>
+        <li>🔮 Future: Integrate eco-friendly accommodations & AI-driven smart tourism for sustainability and inclusivity</li>
+    </ul>
+
+</div>
+<!-- -------------------- END ACCOMMODATION PAGE -------------------- -->
+
+
+<h1 class="grey-heading"> Attractions</h1>
+<div class="page">
+
+<p>Vritdhara is home to unique cultural, cinematic, historical, and eco-tourism attractions. This framework highlights realistic business ideas, algorithms, visuals, and visitor analytics to grow tourism sustainably.</p>
+
+<h3>1. Attractions & Business Ideas</h3>
+<ul>
+    <li>🏛️ <strong>Cultural Emblem:</strong> Guided tours, boat rides, cultural workshops, QR-info kiosks.</li>
+    <li>🎬 <strong>Eterna Studio (Rajapuri):</strong> Studio tours, interactive film-shoot experiences, merchandise, booking slots.</li>
+    <li>🏰 <strong>Vrithdhara Palace:</strong> Heritage tours, audio guides, heritage cafe, souvenir shop.</li>
+    <li>🌿 <strong>National Park:</strong> Wildlife safaris, birdwatching, eco-educational walks, nature photo contests.</li>
+</ul>
+
+<h3>2. Revenue Model</h3>
+<ul>
+    <li>Ticket sales (regular, guided, premium)</li>
+    <li>Souvenir stores & local crafts</li>
+    <li>Photo packages & studio experiences</li>
+    <li>Event hosting (festivals, film fairs)</li>
+    <li>Service partnerships (hotels, transport)</li>
+</ul>
+
+<h3>3. Realistic Algorithms</h3>
+
+<h3><h3>i) Merge_Sorting Algorithm 📊</h3>
+<div class="algorithm-box">
+ALGORITHM MergeSortAttractions(attractions, criteria)  
+BEGIN  
+    // Step 1: Base case
+    IF LENGTH(attractions) <= 1 THEN  
+        RETURN attractions  
+    END IF  
+
+    // Step 2: Divide the list
+    mid = LENGTH(attractions) / 2  
+    leftList = attractions[0..mid-1]  
+    rightList = attractions[mid..END]  
+
+    // Step 3: Recursive sorting
+    sortedLeft = MergeSortAttractions(leftList, criteria)  
+    sortedRight = MergeSortAttractions(rightList, criteria)  
+
+    // Step 4: Merge sorted lists
+    mergedList = EMPTY_LIST  
+    WHILE sortedLeft NOT EMPTY AND sortedRight NOT EMPTY  
+        IF sortedLeft[0][criteria] >= sortedRight[0][criteria] THEN  
+            mergedList.APPEND(sortedLeft[0])  
+            REMOVE sortedLeft[0]  
+        ELSE  
+            mergedList.APPEND(sortedRight[0])  
+            REMOVE sortedRight[0]  
+        END IF  
+    END WHILE  
+
+    // Step 5: Append remaining elements
+    mergedList.APPEND(sortedLeft)  
+    mergedList.APPEND(sortedRight)  
+
+    RETURN mergedList  
+END
+</div>
+<div class="tip-box">
+💡 Tip: For MergeSort, use it when you have more than 30 attractions; for smaller lists, simple sorting may be faster.
+</div>
+
+
+<p class="explanation">
+<strong>Purpose:</strong><br>
+Efficiently sorts attractions by selected criteria (popularity, rating, distance) to help tourists prioritize their visits.
+</p>
+
+<p class="explanation">
+<strong>Inputs:</strong><br>
+<ul style="text-align:left; display:inline-block; font-size:18px;">
+    <li><strong>attractions:</strong> List of attractions with metadata</li>
+    <li><strong>criteria:</strong> Popularity, rating, or distance</li>
+</ul>
+</p>
+
+<p class="explanation">
+<strong>Benefits:</strong><br>
+✅ Stable and efficient sorting (Merge Sort)<br>
+✅ Works well for large attraction lists<br>
+✅ Ensures visitors see the most relevant attractions first<br>
+✅ Can integrate with recommendation systems
+</p>
+
+<h3>ii) Recommendation Algorithm 🤖</h3>
+<div class="algorithm-box">
+ALGORITHM RecommendAttractions(userPreferences, visitorHistory, attractions)  
+BEGIN  
+    INITIALIZE recommendedList = EMPTY_LIST  
+
+    FOR each attraction IN attractions  
+        score = 0  
+
+        // Step 1: Match user interests
+        FOR each interest IN userPreferences  
+            IF interest IN attraction.tags THEN  
+                score += 2   // Strong match with user interest  
+            END IF  
+        END FOR  
+
+        // Step 2: Past visits adjustment
+        IF attraction IN visitorHistory THEN  
+            score -= 1   // Reduce priority if already visited recently  
+        END IF  
+
+        // Step 3: Popularity adjustment
+        popularity = attraction.popularityScore  // e.g., 0-100 scale  
+        score += popularity / 20                  // Normalize popularity  
+
+        // Step 4: Seasonal / special event adjustment
+        IF attraction.hasSpecialEvent THEN  
+            score += 1.5   // Promote attractions with current events  
+        END IF  
+
+        // Step 5: Add to recommendation list with score
+        recommendedList.APPEND({attraction: attraction, score: score})  
+    END FOR  
+
+    // Step 6: Sort by descending score
+    SORT recommendedList BY score DESCENDING  
+
+    RETURN recommendedList  
+END
+</div>
+
+<p class="explanation">
+<strong>Purpose:</strong><br>
+Suggests attractions tailored to visitor interests, previous visits, popularity, and special events to improve satisfaction and engagement.
+</p>
+
+<p class="explanation">
+<strong>Inputs:</strong><br>
+<ul style="text-align:left; display:inline-block; font-size:18px;">
+    <li><strong>userPreferences:</strong> Interests such as cultural, wildlife, heritage, film, etc.</li>
+    <li><strong>visitorHistory:</strong> Record of attractions already visited</li>
+    <li><strong>attractions:</strong> List of attractions with metadata (tags, popularity, special events)</li>
+</ul>
+</p>
+
+<p class="explanation">
+<strong>Benefits:</strong><br>
+✅ Personalized visitor experience<br>
+✅ Encourages exploring lesser-known attractions<br>
+✅ Promotes seasonal events<br>
+✅ Increases satisfaction and engagement<br>
+✅ Can integrate with apps and smart guides
+</p>
+
+<h3>iii) Analytics Algorithm 📈</h3>
+<div class="algorithm-box">
+ALGORITHM GenerateAttractionAnalytics(visitorData)  
+BEGIN  
+    INITIALIZE totalVisitors = 0  
+    INITIALIZE revenuePerAttraction = EMPTY_MAP  
+    INITIALIZE peakHours = EMPTY_MAP  
+    INITIALIZE monthlyTrends = EMPTY_MAP  
+
+    FOR each record IN visitorData  
+        attraction = record.attraction  
+        visitors = record.numVisitors  
+        revenue = record.ticketRevenue  
+        visitTime = record.time  
+
+        // Update total visitors
+        totalVisitors += visitors  
+
+        // Update revenue per attraction
+        IF attraction NOT IN revenuePerAttraction THEN  
+            revenuePerAttraction[attraction] = revenue  
+        ELSE  
+            revenuePerAttraction[attraction] += revenue  
+        END IF  
+
+        // Track peak hours
+        hour = EXTRACT_HOUR(visitTime)  
+        IF attraction NOT IN peakHours THEN  
+            peakHours[attraction] = EMPTY_MAP  
+        END IF  
+        IF hour NOT IN peakHours[attraction] THEN  
+            peakHours[attraction][hour] = visitors  
+        ELSE  
+            peakHours[attraction][hour] += visitors  
+        END IF  
+
+        // Track monthly trends
+        month = EXTRACT_MONTH(visitTime)  
+        IF attraction NOT IN monthlyTrends THEN  
+            monthlyTrends[attraction] = EMPTY_MAP  
+        END IF  
+        IF month NOT IN monthlyTrends[attraction] THEN  
+            monthlyTrends[attraction][month] = visitors  
+        ELSE  
+            monthlyTrends[attraction][month] += visitors  
+        END IF  
+    END FOR  
+
+    // Analyze data
+    FOR each attraction IN revenuePerAttraction  
+        peakHour = MAX_KEY(peakHours[attraction])  
+        totalRevenue = revenuePerAttraction[attraction]  
+        monthlyPattern = monthlyTrends[attraction]  
+        OUTPUT attraction, totalRevenue, peakHour, monthlyPattern  
+    END FOR  
+
+END
+</div>
+
+<p class="explanation">
+<strong>Purpose:</strong><br>
+Analyzes visitor trends, peak hours, monthly visitor patterns, and revenue per attraction to guide staffing, pricing, and event planning.
+</p>
+
+<p class="explanation">
+<strong>Inputs:</strong><br>
+<ul style="text-align:left; display:inline-block; font-size:18px;">
+    <li><strong>visitorData:</strong> Records of visitor numbers, time of visit, and revenue per attraction</li>
+</ul>
+</p>
+
+<p class="explanation">
+<strong>Benefits:</strong><br>
+✅ Identifies peak visiting hours for better crowd management<br>
+✅ Helps optimize staffing and scheduling<br>
+✅ Monitors revenue trends per attraction<br>
+✅ Supports data-driven decision making for promotions and events<br>
+✅ Scalable for multiple attractions over different time periods
+</p>
+
+<h3>iv) Queue Management Algorithm ⏳</h3>
+<div class="algorithm-box">
+ALGORITHM ManageVisitorQueue(attraction, currentVisitors, maxCapacity, timeSlots, visitorPreferences)  
+BEGIN  
+    FOR each visitor IN incomingVisitors  
+        IF currentVisitors[attraction] < maxCapacity THEN  
+            ALLOW entry to visitor  
+            UPDATE currentVisitors[attraction] += 1  
+        ELSE  
+            FIND timeSlot WITH minimum visitors  
+            ASSIGN visitor TO available timeSlot  
+            SEND notification TO visitor about new timeSlot  
+        END IF  
+    END FOR  
+    UPDATE queueStatus REAL-TIME  
+END
+</div>
+
+<p class="explanation">
+<strong>Purpose:</strong><br>
+To manage visitor flow efficiently, reduce overcrowding, and improve visitor satisfaction by dynamically allocating time slots.
+</p>
+
+<p class="explanation">
+<strong>Inputs:</strong><br>
+<ul style="text-align:left; display:inline-block; font-size:18px;">
+    <li><strong>attraction:</strong> The attraction for which queue is managed</li>
+    <li><strong>currentVisitors:</strong> Current number of visitors at the attraction</li>
+    <li><strong>maxCapacity:</strong> Maximum allowed visitors at a time</li>
+    <li><strong>timeSlots:</strong> Available time slots for visiting the attraction</li>
+    <li><strong>visitorPreferences:</strong> Optional preferences like preferred timing</li>
+</ul>
+</p>
+
+<p class="explanation">
+<strong>Step-by-Step Logic:</strong><br>
+1. Check each incoming visitor.<br>
+2. If the attraction is not full, allow entry and update current visitor count.<br>
+3. If full, find the time slot with the least visitors and assign the visitor to that slot.<br>
+4. Notify visitor about their assigned time slot.<br>
+5. Continuously update queue status in real-time for better monitoring.
+</p>
+
+<p class="explanation">
+<strong>Benefits:</strong><br>
+✅ Reduces overcrowding and long waiting times<br>
+✅ Improves visitor experience and satisfaction<br>
+✅ Optimizes visitor distribution across different time slots<br>
+✅ Can be integrated with booking systems and mobile notifications<br>
+✅ Scalable for multiple attractions and peak seasons
+</p>
+
+<p class="explanation">
+<strong>Example Scenario:</strong><br>
+If Vrithdhara Palace has a max capacity of 100 and 120 visitors arrive:<br>
+- First 100 are allowed immediately.<br>
+- Remaining 20 are assigned to future time slots with minimum visitors and notified accordingly.
+</p>
+
+
+<h3>v) Dynamic Pricing Algorithm 💰</h3>
+<div class="algorithm-box">
+ALGORITHM DynamicPricingMaxRevenue(attraction, basePrice, currentVisitors, maxCapacity, season, dayType, specialEvents)  
+    // Inputs: attraction, basePrice, currentVisitors, maxCapacity, season, dayType, specialEvents  
+
+    IF season == "High" THEN seasonMultiplier = 1.25  
+    ELSE IF season == "Medium" THEN seasonMultiplier = 1.0  
+    ELSE seasonMultiplier = 0.85 END IF  
+
+    IF dayType == "Weekend" THEN dayMultiplier = 1.2  
+    ELSE dayMultiplier = 1.0 END IF  
+
+    IF specialEvents == True THEN eventMultiplier = 1.3  
+    ELSE eventMultiplier = 1.0 END IF  
+
+    occupancyRate = currentVisitors / maxCapacity  
+    IF occupancyRate > 0.9 THEN demandMultiplier = 1.5  
+    ELSE IF occupancyRate > 0.7 THEN demandMultiplier = 1.25  
+    ELSE IF occupancyRate > 0.4 THEN demandMultiplier = 1.0  
+    ELSE demandMultiplier = 0.85 END IF  
+
+    finalPrice = basePrice * seasonMultiplier * dayMultiplier * eventMultiplier * demandMultiplier  
+    finalPrice = ROUND(finalPrice, 0)  
+
+    RETURN finalPrice  
+END ALGORITHM
+</div>
+
+<p class="explanation">
+<strong>Purpose:</strong><br>
+Adjusts ticket prices dynamically to maximize revenue, control visitor flow, and encourage visits during low-demand periods.
+</p>
+
+<p class="explanation">
+<strong>Inputs:</strong><br>
+<ul style="text-align:left; display:inline-block; font-size:18px;">
+    <li><strong>attraction:</strong> Name of the attraction</li>
+    <li><strong>basePrice:</strong> Standard ticket price</li>
+    <li><strong>currentVisitors:</strong> Visitors expected at a time</li>
+    <li><strong>maxCapacity:</strong> Maximum allowed visitors</li>
+    <li><strong>season:</strong> High / Medium / Low</li>
+    <li><strong>dayType:</strong> Weekday / Weekend</li>
+    <li><strong>specialEvents:</strong> True if festival or special event</li>
+</ul>
+</p>
+
+<p class="explanation">
+<strong>Step-by-Step Logic:</strong><br>
+1. <strong>Season Multiplier:</strong> High season ↑25%, Medium 0%, Low ↓15%<br>
+2. <strong>Day Type Adjustment:</strong> Weekends ↑20%, Weekdays 0%<br>
+3. <strong>Special Event Adjustment:</strong> Event happening ↑30%<br>
+4. <strong>Demand-Based Adjustment:</strong>  
+   - Occupancy > 90% → ↑50%  
+   - 70-90% → ↑25%  
+   - 40-70% → base price  
+   - <40% → ↓15%<br>
+5. <strong>Final Price Calculation:</strong> <em>finalPrice = basePrice × seasonMultiplier × dayMultiplier × eventMultiplier × demandMultiplier</em><br>
+6. Optional rounding for convenience.
+</p>
+
+<p class="explanation">
+<strong>Benefits:</strong><br>
+✅ Maximizes revenue during peak demand<br>
+✅ Encourages visitors in low-demand periods<br>
+✅ Controls crowd distribution<br>
+✅ Scalable for multiple attractions<br>
+✅ Integrates with booking and analytics systems
+</p>
+
+<p class="explanation">
+<strong>Example Scenarios:</strong>
+<ul style="text-align:left; display:inline-block; font-size:18px;">
+    <li>Weekend in High Season, 95% occupancy → Base 100 → Final Price 225</li>
+    <li>Weekday in Low Season, 30% occupancy → Base 100 → Final Price 72</li>
+    <li>Festival in Medium Season, 80% occupancy → Base 100 → Final Price 195</li>
+</ul>
+</p>
+
+<h3>5. Advantages & Limitations</h3>
+<ul>
+    <li>✅ Enhances visitor experience and satisfaction</li>
+    <li>✅ Supports data-driven revenue planning</li>
+    <li>❌ Requires initial investment for analytics & apps</li>
+    <li>❌ Needs regular data updates</li>
+</ul>
+
+<h3>6. Future Enhancements</h3>
+<ul>
+    <li>AI-driven personalized tour plans</li>
+    <li>AR experiences at Cultural Emblem & Palace</li>
+    <li>Seasonal festivals & film-themed events</li>
+</ul>
+
+<h3>7. SDG Alignment</h3>
+<ul>
+    <li>🌱 SDG 8: Promote sustainable economic growth through tourism</li>
+    <li>🏙️ SDG 11: Preserve cultural heritage and natural environments</li>
+</ul>
+
+<h3>8. Innovative Technology-Based Implementation Ideas</h3>
+<ul>
+    <li>🕶️ <strong>AR/VR Guided Tours:</strong> Historical reconstructions & interactive hotspots for Cultural Emblem, Palace, or National Park.</li>
+    <li>📊 <strong>Smart Visitor Analytics & Recommendation:</strong> Real-time flow tracking & attraction suggestions based on interests.</li>
+    <li>🔔 <strong>Personalized Event Notifications:</strong> Alerts about workshops, festivals, or wildlife tours per visitor preference.</li>
+    <li>🎯 <strong>Gamification & Tourist Challenges:</strong> Points, badges, and rewards for visiting attractions & completing interactive tasks.</li>
+    <li>🌱 <strong>Eco & Cultural Sustainability Tracker:</strong> Reward eco-friendly behavior and participation in cultural workshops.</li>
+    <li>💰 <strong>Dynamic Pricing & Smart Booking:</strong> Optimize ticket prices based on demand and reduce overcrowding.</li>
+    <li>🖥️ <strong>Interactive Storytelling Kiosks:</strong> AR/VR stories, 3D maps, and personalized audio guides at attractions.</li>
+</ul>
+
+<p class="explanation">
+<strong>Integration into Business Case:</strong><br>
+Combining these technologies creates a <em>“Vritdhara Smart Tourism Experience”</em>, enhancing visitor engagement, optimizing operations, increasing revenue, and supporting sustainable tourism.
+</p>
+</div>
+
+<h1 class="grey-heading">Safety, Security & Cleanliness</h1>
+<div class="page">
+
+    <!-- SAFETY -->
+    <h3>1. Importance of Safety</h3>
+    <p>
+    Safety is the backbone of a smart city ecosystem. It ensures protection of citizens,
+    tourists, and public assets. A safe environment builds trust, reduces risks, and
+    enables smooth functioning of urban life.
+    </p>
+    <ul>
+        <li>🛡️ Protects life and property from crime, accidents, and disasters</li>
+        <li>🚨 Enables rapid emergency response and disaster preparedness</li>
+        <li>🏙️ Improves city reputation and tourism confidence</li>
+        <li>📊 Helps authorities analyze incident trends using algorithms</li>
+        <li>🏗️ Supports safer urban planning by identifying risk-prone zones</li>
+    </ul>
+
+    <!-- SECURITY -->
+    <h3>2. Importance of Security</h3>
+    <p>
+    Security focuses on prevention, monitoring, and control of threats. A strong security
+    system ensures law enforcement, crowd management, cyber protection, and infrastructure
+    safety in public spaces.
+    </p>
+    <ul>
+        <li>👮 Prevents crimes through visible policing and surveillance</li>
+        <li>📹 Continuous monitoring using CCTV and AI analytics</li>
+        <li>🚆 Crowd control and safety at railway and bus stations</li>
+        <li>🧑‍💻 Cyber security for smart city digital services</li>
+        <li>🚺 Women and child safety using SOS alerts and smart lighting</li>
+    </ul>
+
+    <!-- CLEANLINESS -->
+    <h3>3. Importance of Cleanliness</h3>
+    <p>
+    Cleanliness is essential for public health, environmental safety, and tourism growth.
+    A clean city reduces disease spread, improves living standards, and promotes sustainable
+    development.
+    </p>
+    <ul>
+        <li>🧹 Maintains hygienic public spaces</li>
+        <li>🌿 Protects rivers, parks, and environment</li>
+        <li>👀 Improves city appearance and tourist satisfaction</li>
+        <li>♻️ Supports smart waste management and sustainability goals</li>
+    </ul>
+
+    <!-- ESSENTIAL SERVICES -->
+    <h3>4. Essential Safety, Security & Cleanliness Services</h3>
+    <ul>
+        <li>👮 Police stations, patrol vehicles, and control rooms</li>
+        <li>🚑 Hospitals, emergency wards, and ambulance services</li>
+        <li>🚒 Fire stations and disaster response units</li>
+        <li>🚆 Railway stations and crowd monitoring systems</li>
+        <li>🛣️ Traffic control, smart signals, and streetlights</li>
+        <li>📹 CCTV surveillance and emergency alert systems</li>
+        <li>🧹 Waste collection, sanitation workers, and cleaning vehicles</li>
+    </ul>
+
+    <!-- ALGORITHMS -->
+    <h3>5. Algorithms Implementation</h3>
+
+  <h3>Business Idea Implementation</h3>
+<p>
+The proposed business idea implements an <strong>Integrated Smart Emergency, Safety, Security & Cleanliness Management System</strong>
+for the city. All essential services such as ambulance, police, fire brigade, railway security,
+traffic control, and sanitation are connected through a centralized digital platform.
+</p>
+
+<p>
+In emergency medical situations, hospitals and ambulances are linked to the system.
+Using <strong>Dijkstra’s Algorithm</strong>, the shortest and fastest route is calculated in real time,
+considering traffic congestion and road conditions. This ensures that ambulances reach patients
+and hospitals in minimum time, saving lives.
+</p>
+
+<p>
+For public safety and security, police patrol units and CCTV surveillance continuously send data
+to the control center. <strong>Quick Sort</strong> prioritizes incidents based on severity such as accidents,
+crimes, or disasters, ensuring high-risk cases are handled first. <strong>BFS</strong> is used to identify
+crime-prone and emergency hotspots, allowing proactive patrolling and crowd control,
+especially in railway stations and public areas.
+</p>
+
+<p>
+Fire stations and disaster response teams are integrated into the same system.
+During fire accidents or natural disasters, <strong>Dijkstra’s Algorithm</strong> again helps fire engines
+reach the affected area quickly. <strong>String Search Algorithms (KMP)</strong> scan emergency messages
+and alerts to detect keywords like “fire”, “explosion”, or “gas leak” for immediate action.
+</p>
+
+<p>
+Cleanliness and waste management are handled using smart bins and sanitation teams.
+Using <strong>Merge Sort</strong>, waste collection schedules are optimized based on location and time,
+while <strong>Greedy Algorithms</strong> allocate cleaning vehicles to areas with maximum waste first.
+This ensures clean streets, reduced pollution, and better hygiene.
+</p>
+
+<p>
+Overall, this business idea reduces response time, optimizes resources, improves public health,
+enhances tourist safety, creates employment, and builds a sustainable smart city ecosystem.
+The integration of algorithms ensures efficiency, scalability, and cost-effective city management.
+</p>
+
+
+    <h4>i) Sorting Algorithms 📊</h4>
+
+    <h5>Quick Sort – Incident Severity Prioritization</h5>
+    <div class="algorithm-box">
+Algorithm: Quick Sort (Incident Prioritization)
+
+Input:
+incidentList[] → {incidentID, severityLevel, location, timeStamp}
+
+Procedure QuickSort(incidentList, low, high)
+    IF low < high THEN
+        pivotIndex ← Partition(incidentList, low, high)
+        QuickSort(incidentList, low, pivotIndex - 1)
+        QuickSort(incidentList, pivotIndex + 1, high)
+
+Procedure Partition(incidentList, low, high)
+    pivot ← incidentList[high].severityLevel
+    i ← low - 1
+    FOR j ← low TO high - 1 DO
+        IF incidentList[j].severityLevel ≥ pivot THEN
+            i ← i + 1
+            SWAP incidentList[i], incidentList[j]
+    SWAP incidentList[i + 1], incidentList[high]
+    RETURN i + 1
+</div>
+    <p>
+    💡 <strong>Explanation:</strong> <strong>Quick Sort</strong> ranks incidents by severity so
+    life-threatening cases are handled first. This helps police, hospitals, and fire services
+    act faster during emergencies.
+    </p>
+
+    <h5>Merge Sort – Time & Location Based Sorting</h5>
+    <div class="algorithm-box">
+Algorithm: Merge Sort (Chronological & Location Sorting)
+
+Input:
+reportList[] → {reportID, areaCode, timeStamp, type}
+
+Procedure MergeSort(reportList)
+    IF length(reportList) > 1 THEN
+        mid ← length(reportList) / 2
+        left ← reportList[0 .. mid-1]
+        right ← reportList[mid .. end]
+        MergeSort(left)
+        MergeSort(right)
+        Merge(left, right, reportList)
+</div>
+
+    <p>
+    💡 <strong>Explanation:</strong> <strong>Merge Sort</strong> is used to organize reports
+    chronologically or by location, ensuring systematic tracking of safety and cleanliness
+    complaints.
+    </p>
+
+    <h4>ii) String Search Algorithms 🔍</h4>
+
+    <h5>Knuth–Morris–Pratt (KMP) Algorithm</h5>
+   <div class="algorithm-box">
+Algorithm: KMP (Emergency Keyword Search)
+
+Input:
+text → citizenReports
+pattern → emergencyKeyword
+
+Procedure KMPSearch(pattern, text)
+    lps[] ← ComputeLPS(pattern)
+    i ← 0, j ← 0
+    WHILE i < length(text) DO
+        IF pattern[j] = text[i] THEN
+            i++, j++
+        IF j = length(pattern) THEN
+            ALERT controlCenter(pattern)
+            j ← lps[j - 1]
+        ELSE IF i < length(text) AND pattern[j] ≠ text[i] THEN
+            IF j ≠ 0 THEN
+                j ← lps[j - 1]
+            ELSE
+                i++
+</div>
+    <p>
+    💡 <strong>Explanation:</strong> <strong>KMP</strong> efficiently searches keywords like
+    “fire”, “accident”, “theft”, or “garbage” in reports, enabling faster identification of
+    emergencies.
+    </p>
+
+    <h5>Naive String Search Algorithm</h5>
+      <div class="algorithm-box">
+Algorithm: Naive String Search
+
+Input:
+text → localAreaReports
+pattern → searchKeyword
+
+FOR i ← 0 TO length(text) - length(pattern)
+    j ← 0
+    WHILE j < length(pattern) AND text[i + j] = pattern[j]
+        j++
+    IF j = length(pattern)
+        DISPLAY "Keyword Found at index", i
+</div>
+    <p>
+    💡 <strong>Explanation:</strong> <strong>Naive Search</strong> is useful for small datasets
+    or manual monitoring systems in low-traffic areas.
+    </p>
+
+    <h4>iii) Graph-Based Algorithms 🌐</h4>
+
+    <h5>Dijkstra’s Algorithm – Emergency Route Optimization</h5>
+    <div class="algorithm-box">
+Algorithm: Dijkstra (Shortest Emergency Route)
+
+Graph:
+Nodes → intersections / hospitals / stations
+Edges → roads with traffic weight
+
+Procedure Dijkstra(graph, source)
+    distance[source] ← 0
+    FOR each node v
+        IF v ≠ source THEN distance[v] ← ∞
+    WHILE unvisited nodes exist
+        u ← node with minimum distance
+        mark u as visited
+        FOR each neighbor v of u
+            IF distance[u] + weight(u,v) < distance[v]
+                distance[v] ← distance[u] + weight(u,v)
+</div>
+
+    <p>
+    💡 <strong>Explanation:</strong> <strong>Dijkstra’s Algorithm</strong> finds the shortest
+    path for ambulances, police, and fire trucks, reducing response time during emergencies.
+    </p>
+
+    <h5>Breadth First Search (BFS) – Hotspot Detection</h5>
+    <div class="algorithm-box">
+Algorithm: Breadth First Search (BFS)
+
+Input:
+CityGraph, startingZone
+
+Procedure BFS(graph, start)
+    queue ← empty
+    visited[start] ← true
+    enqueue(queue, start)
+    WHILE queue not empty
+        zone ← dequeue(queue)
+        ANALYZE(zone)
+        FOR each adjacentZone of zone
+            IF not visited
+                visited ← true
+                enqueue(queue, adjacentZone)
+</div>
+
+    <p>
+    💡 <strong>Explanation:</strong> <strong>BFS</strong> scans nearby areas level by level to
+    identify crime hotspots or dirty zones for patrol and cleaning planning.
+    </p>
+
+    <!-- ANALYTICS -->
+    <h3>6. Analytics & Insights</h3>
+    <div style="width:600px; height:300px; margin:auto;">
+        <canvas id="safetyChart"></canvas>
+    </div>
+    <p style="text-align:center; font-size:18px;">
+    Analytical charts help authorities understand incident patterns, response efficiency,
+    and service performance across safety, security, and cleanliness departments.
+    </p>
+
+    <!-- BENEFITS -->
+    <h3>7. City-Wide Benefits</h3>
+    <ul>
+        <li>👮 Reduced crime and improved public safety</li>
+        <li>🚑 Faster medical and emergency response</li>
+        <li>🧹 Clean and hygienic city environment</li>
+        <li>🏙️ Better urban planning and governance</li>
+        <li>💼 Increased tourism, investment, and economic growth</li>
+        <li>🌱 Sustainable, resilient, and smart city development</li>
+    </ul>
+
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctx = document.getElementById('safetyChart').getContext('2d');
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Police', 'Health', 'Fire', 'Railway', 'Cleanliness'],
+        datasets: [{
+            label: 'Incidents Handled per Month',
+            data: [120, 95, 60, 40, 80],
+            backgroundColor: ['#1e3d59','#ff6e40','#ffa600','#6a67ce','#4db6ac']
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true } }
+    }
+});
+</script>
+<h1 class="grey-heading">Local Culture & Shopping</h1>
+<div class="page">
+
+<p>
+Local culture and shopping are the economic backbone of a city. Traditional markets, handicrafts,
+local cuisine, festivals, and retail hubs not only preserve cultural identity but also generate
+employment, tourism revenue, and sustainable economic growth.
+</p>
+
+<h3>1. Importance of Local Culture & Shopping</h3>
+<ul>
+    <li>🎭 Preserves cultural heritage, traditions, and identity of the city</li>
+    <li>🛍️ Encourages local businesses, artisans, and small retailers</li>
+    <li>💰 Generates revenue through tourism and local consumption</li>
+    <li>👨‍👩‍👧‍👦 Creates employment opportunities for local communities</li>
+    <li>🌍 Enhances city branding and global recognition</li>
+</ul>
+
+<h3>2. Cultural & Commercial Infrastructure</h3>
+<ul>
+    <li>🏪 Local markets and shopping streets</li>
+    <li>🧵 Handicraft and artisan clusters</li>
+    <li>🍲 Traditional food streets and local cuisine hubs</li>
+    <li>🎨 Cultural centers, museums, and art galleries</li>
+    <li>🎉 Festivals, fairs, and cultural events</li>
+    <li>🛒 Smart retail stores and digital payment systems</li>
+</ul>
+
+<h3>3. Business Idea Implementation</h3>
+<p>
+The proposed business idea focuses on developing a <strong>Smart Local Culture & Shopping Ecosystem</strong>
+that integrates traditional markets with modern technology. Local vendors, artisans, and shopkeepers
+are connected to a digital platform where tourists and residents can explore cultural products,
+local food, and shopping locations.
+</p>
+
+<p>
+A centralized system collects data from markets, cultural events, and retail hubs.
+Using algorithms, the system analyzes footfall, demand trends, and customer preferences.
+This helps local businesses stock products efficiently, reduce losses, and increase profits.
+</p>
+
+<p>
+Tourists receive personalized recommendations for cultural experiences and shopping routes,
+encouraging longer stays and higher spending. Digital payments, QR-based product information,
+and online promotion help small businesses compete with large commercial malls.
+</p>
+
+<h3>4. Algorithms Used (From Syllabus)</h3>
+
+<h4>i) Sorting Algorithms – Popularity & Demand Ranking 📊</h4>
+
+<h5>Quick Sort – Ranking Markets & Shops by Demand</h5>
+<div class="algorithm-box">
+Algorithm: Quick Sort (Demand-Based Ranking)
+
+Input:
+shopList[] → {shopID, dailySales, customerRating, footfall}
+
+Procedure QuickSort(shopList, low, high)
+    IF low < high THEN
+        pivotIndex ← Partition(shopList, low, high)
+        QuickSort(shopList, low, pivotIndex - 1)
+        QuickSort(shopList, pivotIndex + 1, high)
+
+Procedure Partition(shopList, low, high)
+    pivot ← shopList[high].footfall
+    i ← low - 1
+    FOR j ← low TO high - 1 DO
+        IF shopList[j].footfall ≥ pivot THEN
+            i ← i + 1
+            SWAP shopList[i], shopList[j]
+    SWAP shopList[i + 1], shopList[high]
+    RETURN i + 1
+</div>
+
+<p>
+💡 <strong>Deep Explanation:</strong>  
+Quick Sort dynamically ranks local shops, street markets, and cultural stalls based on
+<strong>real-time footfall and sales data</strong>. Popular markets automatically appear at the top
+of tourism applications and city dashboards. This helps city authorities promote high-performing
+cultural zones while guiding tourists toward authentic local shopping experiences.
+Its average time complexity of <strong>O(n log n)</strong> makes it suitable for large city datasets.
+</p>
+
+<hr>
+
+<h5>Merge Sort – Stable Cultural Sales Analysis</h5>
+<div class="algorithm-box">
+Algorithm: Merge Sort (Stable Sales & Time Sorting)
+
+Input:
+salesData[] → {marketID, transactionTime, revenue}
+
+Procedure MergeSort(salesData)
+    IF length(salesData) > 1 THEN
+        mid ← length(salesData) / 2
+        left ← salesData[0 .. mid-1]
+        right ← salesData[mid .. end]
+        MergeSort(left)
+        MergeSort(right)
+        Merge(left, right, salesData)
+</div>
+
+<p>
+💡 <strong>Deep Explanation:</strong>  
+Merge Sort is used where <strong>data stability is critical</strong>, such as tracking daily revenue
+of handicraft markets and cultural fairs. It preserves the original order of transactions
+while sorting, helping authorities analyze growth trends, festival sales impact, and vendor performance.
+This ensures fair reporting and accurate economic analysis.
+</p>
+
+---
+
+<h4>ii) String Search Algorithms – Cultural & Product Discovery 🔍</h4>
+
+<h5>Knuth–Morris–Pratt (KMP) – Smart Cultural Search</h5>
+<div class="algorithm-box">
+Algorithm: KMP (Cultural Product Search)
+
+Input:
+directoryText → cityCultureDatabase
+pattern → userSearchKeyword
+
+Procedure KMPSearch(pattern, directoryText)
+    lps[] ← ComputeLPS(pattern)
+    i ← 0, j ← 0
+    WHILE i < length(directoryText) DO
+        IF pattern[j] = directoryText[i] THEN
+            i++, j++
+        IF j = length(pattern) THEN
+            DISPLAY "Item Found"
+            j ← lps[j - 1]
+        ELSE IF i < length(directoryText) AND pattern[j] ≠ directoryText[i] THEN
+            IF j ≠ 0 THEN
+                j ← lps[j - 1]
+            ELSE
+                i++
+</div>
+
+<p>
+💡 <strong>Deep Explanation:</strong>  
+KMP enables fast searching of cultural items such as
+<strong>handloom, pottery, folk art, street food, or festival names</strong>.
+It avoids repeated comparisons, making it highly efficient for
+tourism apps where thousands of shops and cultural entries exist.
+This improves user experience and encourages tourists to explore local markets.
+</p>
+
+<hr>
+
+<h5>Naive String Search – Small Market Lookup</h5>
+<div class="algorithm-box">
+Algorithm: Naive Search
+
+Input:
+marketText → localMarketList
+pattern → productName
+
+FOR i ← 0 TO length(marketText) - length(pattern)
+    j ← 0
+    WHILE j < length(pattern) AND marketText[i + j] = pattern[j]
+        j++
+    IF j = length(pattern)
+        DISPLAY "Product Found"
+</div>
+
+<p>
+💡 <strong>Deep Explanation:</strong>  
+Naive search is suitable for small villages, weekly bazaars, or offline kiosks
+where datasets are limited. It is simple to implement and cost-effective,
+supporting digital inclusion for small vendors.
+</p>
+
+---
+
+<h4>iii) Graph Algorithms – Shopping & Cultural Route Planning 🌐</h4>
+
+<h5>Dijkstra’s Algorithm – Optimized Cultural Tour Routes</h5>
+<div class="algorithm-box">
+Algorithm: Dijkstra (Tourist Route Optimization)
+
+Graph:
+Nodes → markets, museums, food streets
+Edges → walking/driving paths with distance/time weight
+
+Procedure Dijkstra(graph, source)
+    distance[source] ← 0
+    FOR each node v ≠ source
+        distance[v] ← ∞
+    WHILE unvisited nodes exist
+        u ← node with minimum distance
+        mark u as visited
+        FOR each neighbor v of u
+            IF distance[u] + weight(u,v) < distance[v]
+                distance[v] ← distance[u] + weight(u,v)
+</div>
+
+<p>
+💡 <strong>Deep Explanation:</strong>  
+Dijkstra’s Algorithm creates optimized shopping and cultural routes,
+allowing tourists to visit <strong>multiple markets and cultural sites efficiently</strong>.
+By minimizing travel time and distance, tourists can explore more locations,
+increasing spending on local goods and boosting city revenue while reducing congestion.
+</p>
+
+---
+
+
+<h3>5. Economic Impact on the City</h3>
+<ul>
+    <li>💼 Job creation for artisans, vendors, guides, and performers</li>
+    <li>📈 Increased local business revenue and tax collection</li>
+    <li>🏦 Growth of MSMEs and small-scale industries</li>
+    <li>🌍 Attraction of domestic and international tourists</li>
+    <li>🏙️ Balanced urban development beyond malls and corporates</li>
+</ul>
+
+<h3>6. Social & Cultural Benefits</h3>
+<ul>
+    <li>🎭 Preservation of traditions and cultural heritage</li>
+    <li>👨‍👩‍👧 Community participation and inclusion</li>
+    <li>🧵 Recognition and empowerment of local artisans</li>
+    <li>📚 Cultural awareness among tourists and youth</li>
+</ul>
+
+<h3>7. City-Wide Benefits</h3>
+<ul>
+    <li>🏙️ Strong cultural identity and city branding</li>
+    <li>🛍️ Thriving local shopping ecosystem</li>
+    <li>💰 Sustainable economic growth</li>
+    <li>🌱 Reduced dependency on large commercial chains</li>
+    <li>✨ Enhanced tourist satisfaction and repeat visits</li>
+</ul>
+
+</div>
+<!-- ==================== FINAL DETAILED CONCLUSION ==================== -->
+
+<h1 class="grey-heading">CONCLUSION</h1>
+<div class="page">
+
+<!-- SINGLE CITY PHOTO ONLY -->
+<div style="text-align:center; margin-bottom:30px;">
+    <img src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b"
+         style="width:100%; max-width:900px; border-radius:14px;">
+    <p style="font-style:italic;">
+        Smart city projected as an algorithm-driven system
+    </p>
+</div>
+
+<h3>1. Overall Project Flow</h3>
+
+<p>
+The complete project follows a structured and logical flow where the city is
+first modeled digitally and then enhanced using algorithmic intelligence.
+Initially, all city entities such as tourist locations, hotels, attractions,
+roads, safety units, and service zones are represented as structured data.
+This data forms the base on which the entire system operates.
+</p>
+
+<p>
+Once the data structure is established, algorithms are applied to process,
+analyze, and optimize city operations. Navigation, ranking, searching,
+prioritization, and analytics are not hard-coded but computed dynamically
+based on real-time and historical data. This approach ensures flexibility,
+accuracy, and scalability.
+</p>
+
+<p>
+Finally, the processed outputs are visualized using graphs and dashboards,
+allowing both tourists and administrators to understand system behavior
+and take informed decisions.
+</p>
+
+<hr>
+
+<h3>2. Strategies Used in System Design</h3>
+
+<p>
+Multiple algorithmic and architectural strategies are used to build this system:
+</p>
+
+<ul>
+    <li>
+        <strong>Graph-Based Modeling:</strong>
+        The city is treated as a graph where nodes represent locations and
+        services, and edges represent connectivity. This enables efficient
+        routing and movement analysis.
+    </li>
+    <li>
+        <strong>Divide and Conquer:</strong>
+        Large datasets such as hotel lists and attraction data are efficiently
+        sorted using divide-and-conquer strategies.
+    </li>
+    <li>
+        <strong>Greedy Decision Making:</strong>
+        Local optimal choices are made for tasks like resource allocation and
+        cleanliness scheduling to minimize cost and time.
+    </li>
+    <li>
+        <strong>Priority-Based Processing:</strong>
+        Safety incidents and service requests are handled based on severity,
+        ensuring critical issues are addressed first.
+    </li>
+</ul>
+
+<p>
+These strategies together create a system that is both efficient and reliable
+for city-scale deployment.
+</p>
+
+<hr>
+
+<h3>3. Role of Algorithms in Building the Entire Code</h3>
+
+<p>
+Algorithms form the core logic of the project code. Each major module is
+implemented using a specific algorithmic approach rather than static logic.
+This ensures that the system adapts automatically as data changes.
+</p>
+
+<ul>
+    <li>
+        <strong>Dijkstra’s Algorithm:</strong>
+        Used in navigation and emergency routing to compute shortest paths
+        dynamically across the city network.
+    </li>
+    <li>
+        <strong>Quick Sort:</strong>
+        Applied for ranking attractions, incidents, and services where
+        frequent updates are required.
+    </li>
+    <li>
+        <strong>Merge Sort:</strong>
+        Used for stable sorting in analytics and report generation,
+        ensuring consistency across datasets.
+    </li>
+    <li>
+        <strong>BFS:</strong>
+        Used to identify crowded zones and hotspots by traversing nearby nodes.
+    </li>
+    <li>
+        <strong>KMP:</strong>
+        Enables fast searching of emergency keywords, services, and cultural data.
+    </li>
+</ul>
+
+<p>
+By embedding algorithms directly into the code logic, the project avoids
+manual rule-based decisions and achieves true intelligent automation.
+</p>
+
+<hr>
+
+<h3>4. Graph Analysis and Interpretation</h3>
+
+<!-- GRAPH -->
+<div style="width:650px; height:350px; margin:auto;">
+    <canvas id="algoChart"></canvas>
+</div>
+
+<p style="text-align:center; font-size:18px;">
+<strong>Graph Interpretation:</strong><br>
+The graph compares algorithm efficiency based on their time complexity.
+Lower values indicate better performance at scale.
+Algorithms selected in this project maintain acceptable execution time
+even as the number of tourists, services, and routes increases.
+</p>
+
+<p>
+This visualization validates the choice of algorithms and proves that
+the system is capable of handling real-world city data without degradation
+in performance.
+</p>
+
+<hr>
+
+<h3>5. Order of Growth and System Efficiency</h3>
+
+<table style="width:100%; border-collapse:collapse; text-align:center;">
+<tr style="background:#f2f2f2;">
+    <th>Algorithm</th>
+    <th>Order of Growth</th>
+    <th>Efficiency Contribution</th>
+</tr>
+<tr>
+    <td>Dijkstra</td>
+    <td>O((V+E) log V)</td>
+    <td>Efficient real-time routing in large city networks</td>
+</tr>
+<tr>
+    <td>Quick Sort</td>
+    <td>O(n log n)</td>
+    <td>Fast ranking and prioritization of services</td>
+</tr>
+<tr>
+    <td>Merge Sort</td>
+    <td>O(n log n)</td>
+    <td>Stable analytics and report processing</td>
+</tr>
+<tr>
+    <td>BFS</td>
+    <td>O(V + E)</td>
+    <td>Quick zone and hotspot detection</td>
+</tr>
+<tr>
+    <td>KMP</td>
+    <td>O(n + m)</td>
+    <td>Efficient information and emergency searches</td>
+</tr>
+</table>
+
+<p>
+The selected algorithms ensure optimal performance by minimizing time
+and space complexity. This makes the system scalable and suitable for
+real-time city-level operations.
+</p>
+
+<hr>
+
+<h3>6. Final Technical Conclusion</h3>
+
+<p style="font-size:20px; font-weight:bold; text-align:center;">
+In conclusion, this project demonstrates that smart city tourism systems
+are fundamentally built on algorithmic efficiency.
+Through structured project flow, well-defined strategies,
+and careful algorithm selection, the system achieves scalability,
+reliability, and intelligent decision-making.
+Design and Analysis of Algorithms serve as the backbone that connects
+data, logic, and real-world city operations into a unified solution.
+</p>
+
+</div>
+
+<!-- ==================== END CONCLUSION ==================== -->
+
+<!-- CHART SCRIPT -->
+<script>
+const algoCtx = document.getElementById('algoChart').getContext('2d');
+new Chart(algoCtx, {
+    type: 'bar',
+    data: {
+        labels: ['Dijkstra', 'Quick Sort', 'Merge Sort', 'BFS', 'KMP'],
+        datasets: [{
+            label: 'Relative Efficiency (Lower is Better)',
+            data: [2, 3, 3, 1, 1],
+            backgroundColor: ['#3498db','#e67e22','#9b59b6','#2ecc71','#1abc9c']
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Algorithm Efficiency Comparison'
+            }
+        },
+        scales: {
+            y: { beginAtZero: true }
+        }
+    }
+});
+</script>
+
